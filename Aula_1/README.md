@@ -146,18 +146,18 @@ Avaliando as matrizes, é possível observar que a matriz de covariância **S** 
 A próxima análise é a dispersão dois a dois da normal gerada.  
 O primeiro grupo de comparação é considerando a correlação **r** = 0.0. As 3 imagens a seguir mostram que a dispersão entre as variáveis *p1*, *p2* e *p3* é simétrica entre os eixos X e Y além de se centrarem no zero. A dispersão se assemelha a um círculo, pois não há correlação entre as 3 normais geradas (*p1*, *p2* e *p3*), elas apenas possuem a mesma variância em relação à média 0,0.
 
-[!pairs_0_100](./images/pairs_0_100.png)
-[!pairs_0_1000](./images/pairs_0_1000.png)
-[!pairs_0_10000](./images/pairs_0_10000.png)
+![pairs_0_100](./images/pairs_0_100.png)  
+![pairs_0_1000](./images/pairs_0_1000.png)  
+![pairs_0_10000](./images/pairs_0_10000.png)  
 
 Com o valor de correlação **r** = .9, as imagens a seguir mostram dispersões se aproximam de uma reta ascendente. Isso é dado porque Y é uma função linear de X. Como a covariância dos elementos é próximo de 1, mas ainda distante .1, a dispersão ainda apresenta a forma de uma elipse, mais visível nas amostras maiores.
 
-[!pairs_0.9_100](./images/pairs_0.9_100.png)
-[!pairs_0.9_1000](./images/pairs_0.9_1000.png)
-[!pairs_0.9_10000](./images/pairs_0.9_10000.png)
+![pairs_0.9_100](./images/pairs_0.9_100.png)    
+![pairs_0.9_1000](./images/pairs_0.9_1000.png)  
+![pairs_0.9_10000](./images/pairs_0.9_10000.png)  
 
 Finalmente, com a correlação **r** = .99, as imagens a seguir mostram dispersão muito próximas de uma reta ascendente. Como a covariância dos elementos está a .01 de 1, nas amostras maiores, é possível visualizar claramente a reta ascendente.
 
-[!pairs_0.99_100](./images/pairs_0.99_100.png)
-[!pairs_0.99_1000](./images/pairs_0.99_1000.png)
-[!pairs_0.99_10000](./images/pairs_0.99_10000.png)
+![pairs_0.99_100](./images/pairs_0.99_100.png)  
+![pairs_0.99_1000](./images/pairs_0.99_1000.png)  
+![pairs_0.99_10000](./images/pairs_0.99_10000.png)  
