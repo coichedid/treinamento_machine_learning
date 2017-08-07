@@ -19,6 +19,7 @@ Dica: verificar as funções boxplot, *hist*, *qqnorm* e *plot* do programa R.
 O exercício solicita uma distribuição normal trivariada. Desta forma, o número *p* de variáveis é **3**.  
 No enunciado também foi definido que a variância **s** é **1**.  
 Assim, temos como variáveis iniciais:  
+
 | Variável | Valor |  
 | -------- |:-----:|  
 | *p*      | 3     |  
