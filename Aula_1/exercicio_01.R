@@ -3,8 +3,8 @@ library(mvtnorm)
 calcula.sigma <- function(variancia,correlacao) {
     sjj <- variancia ## Variancia igual a 1
     r_jk <- correlacao ## Utilizando a primeira opcao de correlacao
-    R <- matrix(r_jk,3,3)
-    diag(R) <- 1 ## Matriz de correlacao tem 1 como diagonal
+    R <<- matrix(r_jk,3,3)
+    diag(R) <<- 1 ## Matriz de correlacao tem 1 como diagonal
     roh <- sqrt(sjj) ## Desvio padrao
     delta_meio <- diag(roh,3,3)
     
@@ -96,20 +96,22 @@ analisa.matriz <- function(cor.index,tam.amostra,save.image = FALSE) {
     }
 }
 
-analisa.matriz(1,1,save.image = TRUE) ## Sigma não é positiva definida
+save <- FALSE
+
+analisa.matriz(1,1,save.image = save) ## Sigma não é positiva definida
 
 ## Segundo valor de correlacao (0.0)
-analisa.matriz(2,1,save.image = TRUE) 
-analisa.matriz(2,2,save.image = TRUE)
-analisa.matriz(2,3,save.image = TRUE)
+analisa.matriz(2,1,save.image = save) 
+analisa.matriz(2,2,save.image = save)
+analisa.matriz(2,3,save.image = save)
 
 ## Terceiro valor de correlacao (0.9)
-analisa.matriz(3,1,save.image = TRUE) 
-analisa.matriz(3,2,save.image = TRUE)
-analisa.matriz(3,3,save.image = TRUE)
+analisa.matriz(3,1,save.image = save) 
+analisa.matriz(3,2,save.image = save)
+analisa.matriz(3,3,save.image = save)
 
 ## Quarto valor de correlacao (0.99)
-analisa.matriz(4,1,save.image = TRUE) 
-analisa.matriz(4,2,save.image = TRUE)
-analisa.matriz(4,3,save.image = TRUE)
+analisa.matriz(4,1,save.image = save) 
+analisa.matriz(4,2,save.image = save)
+analisa.matriz(4,3,save.image = save)
 
