@@ -12,7 +12,7 @@ calcula.sigma <- function(variancia,correlacao) {
     
 }
 
-matriz.eh.definida.positiva <- function(m) {
+matriz.eh.positiva.definida <- function(m) {
     e <- eigen(m)$values >= 0 ## Matriz positiva definida tem auto valores >= 0
     all(e)
 }
@@ -25,7 +25,7 @@ analisa.matriz <- function(cor.index,tam.amostra,save.image = FALSE) {
     num.amostras <- tam_amostras[tam.amostra]
     
     Sigma = calcula.sigma(1,cor.selected)
-    if (matriz.eh.definida.positiva(Sigma)) { ## para simular a normal Sigma deve ser positivo e definido
+    if (matriz.eh.positiva.definida(Sigma)) { ## para simular a normal Sigma deve ser positivo e definido
         if (save.image) {
             if (!file.exists("./images")) dir.create("./images")
         }
@@ -96,7 +96,7 @@ analisa.matriz <- function(cor.index,tam.amostra,save.image = FALSE) {
     }
 }
 
-save <- FALSE
+save <- TRUE
 
 analisa.matriz(1,1,save.image = save) ## Sigma não é positiva definida
 
