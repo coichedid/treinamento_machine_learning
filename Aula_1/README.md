@@ -27,9 +27,10 @@ Assim, temos como variáveis iniciais:
 | *r*      | {-.9,0,.9,.99} |  
 | *n*      | {100,1000,10000} |  
 
-Para iniciar o exercício, primeiro é preciso encontrar a matriz **&#931;**.  
+Para iniciar o exercício, primeiro é preciso encontrar a matriz de covariância **&#931;**. Ela é obtida pela equação ![eq_sigma](https://latex.codecogs.com/gif.download?%5CDelta%20%5E%7B%5Cfrac%7B1%7D%7B2%7D%7D*R*%5CDelta%20%5E%7B%5Cfrac%7B1%7D%7B2%7D%7D)  
 Os passos para calcular a matriz **&#931;** a partir da Variância e Correlação são:
 1. Criar uma matriz de correlação **R**
   1. Definir uma matriz *p*X*p* com valores iguais à correlação escolhida
   2. Definir a diagonal da matriz **R** para 1, pois a matriz de correlação tem diagonal 1 (correlação entre um elemento e ele mesmo **r<sub>ii<sub>**)
-2. Calcular o desvio padrão **&#961;** igual a
+2. Calcular o desvio padrão **&#961;** igual a ![sqrt(s)](https://latex.codecogs.com/gif.download?%5Csqrt%7Bvar%7D)
+3. Calcular  ![delta_meio](https://latex.codecogs.com/gif.download?%5CDelta%20%5E%7B%5Cfrac%7B1%7D%7B2%7D%7D) igual a matriz diagonal de **&#961;**
