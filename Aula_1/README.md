@@ -55,10 +55,11 @@ head(w)
 [5,] -1.6802752 -1.72108468 -1.79692971
 [6,]  1.3113248  1.51770857  1.39245846
 ```  
-O script R [Exercicio 01](./exercicio_01.R) define 3 funções para calcular os parâmetros necessários para o exercício:  
+O script R [Exercicio 01](./exercicio_01.R) define 3 funções para calcular os parâmetros necessários para o exercício e uma função que compara a correlação da amostra com a correlação original:  
 * analisa_matriz: recebe os índices escolhidos para correlação e tamanho da normal e se deve-se salvar os gráficos em arquivos .PNG;
 * calcula.sigma: recebe um valor de variância e um de correlação e calcula a matriz de covariância **&#931;** conforme explicação acima;
 * matriz.eh.positiva.definida: valida se a matriz **&#931;** é positiva definida
+* compara.correlacoes: recebe o sigma calculado, a normal gerada e a correlação original e gera um dataframe com a covariancia da normal, a covariância calculada, o número de amostras e a correlação solicitada
 
 Além disso, o script faz a análise de cada correlação (-.9,0,.9,.99) para cada tamanho da normal (100,1000,10000).  
 
@@ -72,3 +73,71 @@ A pasta [images](./images) contém os gráficos obtidos a partir da execução c
 O padrão de nomeação dos arquivos é `<tipo de grafico>_<numcorrelacao>_<tamanho>.png`.  
 
 ### Análise  
+Para início da análise, a função analisa.matriz retorna um dataframe com uma linha contendo:
+* Correlação encontrada na normal
+* Matriz **&#931;** calculada durante a análise
+* O número de linhas da amostra e
+* A correlação utilizada na análise
+
+Para cada análise, o retorno é concatenado no data.frame comparacao, para avaliação.  
+O resultado da comparação segue a seguir. Ele é uma lista de 9 combinações entre correlações {0, .9, .99} (A primeira correlação -.9 foi excluída, pois gera uma matriz **&#931** que não é positiva definida) e tamanhos da amostra {100, 1000, 10000}.
+```R
+> comparacao
+$`0.100`
+  cov.normal.1 cov.normal.2 cov.normal.3 sigma.1 sigma.2 sigma.3 num.amostra correlacao
+1   1.00000000   0.06480644   -0.1555318       1       0       0         100          0
+2   0.06480644   1.00000000   -0.1060261       0       1       0         100          0
+3  -0.15553185  -0.10602614    1.0000000       0       0       1         100          0
+
+$`0.9.100`
+   cov.normal.1 cov.normal.2 cov.normal.3 sigma.1 sigma.2 sigma.3 num.amostra correlacao
+10    1.0000000    0.9880420    0.9875237     1.0     0.9     0.9         100        0.9
+11    0.9880420    1.0000000    0.9956702     0.9     1.0     0.9         100        0.9
+12    0.9875237    0.9956702    1.0000000     0.9     0.9     1.0         100        0.9
+
+$`0.99.100`
+   cov.normal.1 cov.normal.2 cov.normal.3 sigma.1 sigma.2 sigma.3 num.amostra correlacao
+19    1.0000000    0.9998499    0.9998233    1.00    0.99    0.99         100       0.99
+20    0.9998499    1.0000000    0.9999277    0.99    1.00    0.99         100       0.99
+21    0.9998233    0.9999277    1.0000000    0.99    0.99    1.00         100       0.99
+
+$`0.1000`
+  cov.normal.1 cov.normal.2 cov.normal.3 sigma.1 sigma.2 sigma.3 num.amostra correlacao
+4  1.000000000 -0.008810824  -0.01841990       1       0       0        1000          0
+5 -0.008810824  1.000000000   0.03317981       0       1       0        1000          0
+6 -0.018419895  0.033179807   1.00000000       0       0       1        1000          0
+
+$`0.9.1000`
+   cov.normal.1 cov.normal.2 cov.normal.3 sigma.1 sigma.2 sigma.3 num.amostra correlacao
+13    1.0000000    0.9907845    0.9886263     1.0     0.9     0.9        1000        0.9
+14    0.9907845    1.0000000    0.9946763     0.9     1.0     0.9        1000        0.9
+15    0.9886263    0.9946763    1.0000000     0.9     0.9     1.0        1000        0.9
+
+$`0.99.1000`
+   cov.normal.1 cov.normal.2 cov.normal.3 sigma.1 sigma.2 sigma.3 num.amostra correlacao
+22    1.0000000    0.9998456    0.9998073    1.00    0.99    0.99        1000       0.99
+23    0.9998456    1.0000000    0.9999227    0.99    1.00    0.99        1000       0.99
+24    0.9998073    0.9999227    1.0000000    0.99    0.99    1.00        1000       0.99
+
+$`0.10000`
+  cov.normal.1 cov.normal.2 cov.normal.3 sigma.1 sigma.2 sigma.3 num.amostra correlacao
+7  1.000000000 -0.006753944  0.001033709       1       0       0       10000          0
+8 -0.006753944  1.000000000  0.011029030       0       1       0       10000          0
+9  0.001033709  0.011029030  1.000000000       0       0       1       10000          0
+
+$`0.9.10000`
+   cov.normal.1 cov.normal.2 cov.normal.3 sigma.1 sigma.2 sigma.3 num.amostra correlacao
+16    1.0000000    0.9895443    0.9880605     1.0     0.9     0.9       10000        0.9
+17    0.9895443    1.0000000    0.9944100     0.9     1.0     0.9       10000        0.9
+18    0.9880605    0.9944100    1.0000000     0.9     0.9     1.0       10000        0.9
+
+$`0.99.10000`
+   cov.normal.1 cov.normal.2 cov.normal.3 sigma.1 sigma.2 sigma.3 num.amostra correlacao
+25    1.0000000    0.9998445    0.9997931    1.00    0.99    0.99       10000       0.99
+26    0.9998445    1.0000000    0.9999157    0.99    1.00    0.99       10000       0.99
+27    0.9997931    0.9999157    1.0000000    0.99    0.99    1.00       10000       0.99
+```  
+
+As colunas cov.normal.{1,2,3} representam a matriz de covariância da normal e sigma.{1,2,3} representam a matriz **&#931;**.  
+Cada grupo $`r.rr.nnnnn` representa uma combinação de r.rr correlação e nnnn tamanho da amostra.  
+Avaliando as matrizes, é possível observar que a matriz de covariância **S** das normais geradas respeitam a matriz **&#931;** calculada para cada correlação. É possível observar que os casos com tamanho de amostra maior, as matrizes se aproximam mais.  

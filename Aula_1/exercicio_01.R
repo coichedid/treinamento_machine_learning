@@ -1,5 +1,12 @@
 library(mvtnorm)
 
+compara.correlacoes <- function(sigma,normal,correlacao) {
+    # Usando a decomposicao de Cholesky
+    T <- chol(sigma)
+    y <- normal%*%T
+    data.frame(cov.normal=cor(y),sigma=sigma,num.amostra=nrow(normal),correlacao=correlacao)
+}
+
 calcula.sigma <- function(variancia,correlacao) {
     sjj <- variancia ## Variancia igual a 1
     r_jk <- correlacao ## Utilizando a primeira opcao de correlacao
@@ -91,27 +98,30 @@ analisa.matriz <- function(cor.index,tam.amostra,save.image = FALSE) {
         qqnorm(w[,3], main = "3rd dim")
         qqline(w[,3],col="red")
         if (save.image) dev.off()
+        return(compara.correlacoes(Sigma,w,cor.selected))
     } else {
         cat("Matriz Sigma não é positiva e definida\n")
+        return()
     }
 }
 
 save <- TRUE
-
+comparacao <- data.frame()
 analisa.matriz(1,1,save.image = save) ## Sigma não é positiva definida
 
 ## Segundo valor de correlacao (0.0)
-analisa.matriz(2,1,save.image = save) 
-analisa.matriz(2,2,save.image = save)
-analisa.matriz(2,3,save.image = save)
+comparacao <- rbind(comparacao,analisa.matriz(2,1,save.image = save))  
+comparacao <- rbind(comparacao,analisa.matriz(2,2,save.image = save))
+comparacao <- rbind(comparacao,analisa.matriz(2,3,save.image = save))
 
 ## Terceiro valor de correlacao (0.9)
-analisa.matriz(3,1,save.image = save) 
-analisa.matriz(3,2,save.image = save)
-analisa.matriz(3,3,save.image = save)
+comparacao <- rbind(comparacao,analisa.matriz(3,1,save.image = save)) 
+comparacao <- rbind(comparacao,analisa.matriz(3,2,save.image = save))
+comparacao <- rbind(comparacao,analisa.matriz(3,3,save.image = save))
 
 ## Quarto valor de correlacao (0.99)
-analisa.matriz(4,1,save.image = save) 
-analisa.matriz(4,2,save.image = save)
-analisa.matriz(4,3,save.image = save)
+comparacao <- rbind(comparacao,analisa.matriz(4,1,save.image = save)) 
+comparacao <- rbind(comparacao,analisa.matriz(4,2,save.image = save))
+comparacao <- rbind(comparacao,analisa.matriz(4,3,save.image = save))
 
+comparacao <- split(comparacao,list(comparacao$correlacao,comparacao$num.amostra))
