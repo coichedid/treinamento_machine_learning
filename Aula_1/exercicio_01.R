@@ -67,12 +67,22 @@ analisa.matriz <- function(cor.index,tam.amostra,save.image = FALSE) {
         if (save.image) png(paste("./images/","hist_",cor.selected,"_",
                                   num.amostras,".png",sep = "")) else quartz()
         ## comparacao de histogramas
-        hist(w[,1],col=rgb(0,1,0,1)) 
-        hist(w[,2],add=T,col = rgb(1,0,0,1/2))
-        hist(w[,3],add=T,col=rgb(0,0,1,1/4))
-        legend("topright",legend = c("1st dim","2nd dim","3rd dim"),
-               col = c("green","red","blue"),
-               lty = lty, lwd = lwd)
+        par(mfrow=c(1,3))
+        h <- hist(w[,1],col = "gray", main = "1st dim") 
+        xfit <- seq(min(w[,1]),max(w[,1]),length=40)
+        yfit <- dnorm(xfit,mean = mean(w[,1]),sd = sd(w[,1]))
+        yfit <- yfit*diff(h$mids[1:2])*length(w[,1])
+        lines(xfit,yfit,col="green",lwd=2)
+        h <- hist(w[,2],col = "gray", main = "2nd dim")
+        xfit <- seq(min(w[,2]),max(w[,2]),length=40)
+        yfit <- dnorm(xfit,mean = mean(w[,2]),sd = sd(w[,2]))
+        yfit <- yfit*diff(h$mids[1:2])*length(w[,2])
+        lines(xfit,yfit,col="red",lwd=2)
+        h <- hist(w[,3],col="gray", main = "3rd dim")
+        xfit <- seq(min(w[,3]),max(w[,3]),length=40)
+        yfit <- dnorm(xfit,mean = mean(w[,3]),sd = sd(w[,3]))
+        yfit <- yfit*diff(h$mids[1:2])*length(w[,3])
+        lines(xfit,yfit,col="blue",lwd=2)
         if (save.image) dev.off()
         
         
