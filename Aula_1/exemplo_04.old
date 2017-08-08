@@ -1,0 +1,17 @@
+p <- 3 # dimensao
+n <- 100000 # tamanho da amostra
+# estrutura de covariancia (correlacao)
+SIGMA <- matrix(c(1,0.9,0.8,0.9,1,0.7,0.8,0.7,1),p,p,T)
+# normais independentes
+x <- matrix(rnorm(p*n),n,p) # note a transposicao
+#-------------------------------------------------------
+# Usando o SVD
+S <- svd(SIGMA) # decomposicao de SIGMA
+T <- S$u%*%diag(sqrt(S$d)) # construcao da matriz T
+y <- x%*%t(T) # gerando valores
+cor(y); SIGMA
+#-------------------------------------------------------
+# Usando a decomposicao de Cholesky
+T <- chol(SIGMA)
+y <- x%*%T
+cor(y); SIGMA
