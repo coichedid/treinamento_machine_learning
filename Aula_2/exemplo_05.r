@@ -18,7 +18,7 @@ colnames(pnb) <- c("Urna 0","Urna 1","Urna 2","Urna 3",
 "Urna 10")
 rownames(pnb) <- seq(0,10)
 for(i in 1:11)
-	pnb[,i] <- dbinom(nb,10,fb[i])
+	pnb[,i] <- dbinom(nb,10,fb[i]) #calcula densidade binomial (probabilidade)
 pnb 
 
 apply(pnb,2,"sum")
