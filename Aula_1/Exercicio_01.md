@@ -55,7 +55,7 @@ head(w)
 [5,] -1.6802752 -1.72108468 -1.79692971
 [6,]  1.3113248  1.51770857  1.39245846
 ```  
-O script R [Exercicio 01](./exercicio_01.R) define 3 funções para calcular os parâmetros necessários para o exercício e uma função que compara a correlação da amostra com a correlação original:  
+O script R [Exercicio 01](./exercicio_01.R) define 3 funções para calcular os parâmetros necessários para o exercício e 1 função que compara a correlação da amostra com a correlação original:  
 * analisa_matriz: recebe os índices escolhidos para correlação e tamanho da normal e se deve-se salvar os gráficos em arquivos .PNG;
 * calcula.sigma: recebe um valor de variância e um de correlação e calcula a matriz de covariância **&#931;** conforme explicação acima;
 * matriz.eh.positiva.definida: valida se a matriz **&#931;** é positiva definida
