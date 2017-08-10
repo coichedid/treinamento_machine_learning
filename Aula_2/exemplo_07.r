@@ -145,7 +145,7 @@ ngrid       <- 1000
 lambdatrc   <- seq(0.001,100,length=ngrid)
 flambdatrc  <- rep(NA,ngrid)
 for(i in 1:ngrid){
-	aux <- dexptrunc(xsample[1],1/lambdatrc[i],0,20)
+	aux <- dexptrunc(xsample[1],1/lambdatrc[i],1,20)
 	for(j in 2:n) 
 		aux <- aux*dexptrunc(xsample[j],1/lambdatrc[i],1,20)
 	flambdatrc[i] <- aux
