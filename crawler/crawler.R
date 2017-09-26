@@ -23,7 +23,7 @@ carregaDependencias <- function() {
 ## Parse data de atualizacao do site
 ## Compara com a ultima data de atualizacao 
 estaAtualizado <- function(atualizacao, destino = paste(".","ultimaAtualizacao.rds",sep = file_sep)) {
-    meses <- hashmap(c("janeiro","fevereiro","março","abril","maio", "junho",
+    meses <- hashmap(c("janeiro","fevereiro","marco","abril","maio", "junho",
                        "julho","agosto","setembro","outubro","novembro","dezembro"),
                      1:12)
     
@@ -51,7 +51,7 @@ forcaAtualizacao <- function(destino = paste(".","ultimaAtualizacao.rds",sep = f
 }
 
 extraiHrefs <- function(no) {
-    print("Outro nó")
+    print("Outro n?")
     #print(no)
     h <- sapply(no["li"],function(el) {
         link <- xmlGetAttr(el[["p"]][["a"]],"href")
@@ -87,7 +87,7 @@ baixaArquivos <- function(doc, destino = paste(".",file_sep,sep = "")) {
     nos <- xpathSApply(doc,"//ul[@class = 'square']",function(el) el)
     hrefs <- sapply(nos,extraiHrefs)
     names(hrefs) <- c("Literatura","Aulas","Exemplos","Apoio","Octave","Dados")
-    print(hrefs)
+    # print(hrefs)
     
     pastas <- names(hrefs)
     for(p in pastas) {
@@ -105,7 +105,7 @@ carregaDependencias()
 ## Get destination folders
 #print(pasta_default)
 if (!exists("pasta_default")) {
-  print("Onde estão as pastas a serem atualizadas?")
+  print("Onde est?o as pastas a serem atualizadas?")
   f <- readline(prompt = "Entre com o caminho completo das pastas, separadas por virgula: ")
   script.dir <- strsplit(f,",")[[1]]
 } else script.dir <- c(pasta_default)
@@ -121,13 +121,13 @@ atualizacao <- xpathSApply(doc,"//font[@face='Arial, Helvetica, sans-serif']/b",
 for (s in script.dir) {
     f <- paste(s,"ultimaAtualizacao.rds",sep = file_sep)
     
-    ## Comentar se não quiser forçar a atualização
+    ## Comentar se n?o quiser for?ar a atualiza??o
     forcaAtualizacao(f)
     
     atualizado <- estaAtualizado(atualizacao, destino = f)
     
     if (!atualizado) {
         baixaArquivos(doc, destino = s)
-    } else print("Já está atualizado")
+    } else print("J? est? atualizado")
 }
 #setwd(wd)
