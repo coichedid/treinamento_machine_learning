@@ -23,13 +23,13 @@ carregaDependencias <- function() {
 ## Parse data de atualizacao do site
 ## Compara com a ultima data de atualizacao 
 estaAtualizado <- function(atualizacao, destino = paste(".","ultimaAtualizacao.rds",sep = file_sep)) {
-    meses <- hashmap(c("janeiro","fevereiro","marÃ§o","abril","maio", "junho",
+    meses <- hashmap(c("janeiro","fevereiro","março","abril","maio", "junho",
                        "julho","agosto","setembro","outubro","novembro","dezembro"),
                      1:12)
     
     ## Parse da data do site
     dataAtualizacao <- strsplit(atualizacao,":")[[1]][2]
-    dataAtualizacao <- str_match(dataAtualizacao,"^ ([0-3][0-9]) de (.*), ([0-9]{4})\\.")
+    dataAtualizacao <- str_match(dataAtualizacao,"^ ([0-3]?[0-9]) de (.*), ([0-9]{4})\\.")
     dataAtualizacao[1,3] <- meses[[tolower(dataAtualizacao[1,3])]]
     dataAtualizacao <- as.Date(paste(dataAtualizacao[1,2],dataAtualizacao[1,3],
                                      dataAtualizacao[1,4]),"%d %m %Y")
@@ -51,7 +51,7 @@ forcaAtualizacao <- function(destino = paste(".","ultimaAtualizacao.rds",sep = f
 }
 
 extraiHrefs <- function(no) {
-    print("Outro nÃ³")
+    print("Outro nó")
     #print(no)
     h <- sapply(no["li"],function(el) {
         link <- xmlGetAttr(el[["p"]][["a"]],"href")
@@ -86,7 +86,8 @@ download_without_overwrite <- function(url, folder)
 baixaArquivos <- function(doc, destino = paste(".",file_sep,sep = "")) {
     nos <- xpathSApply(doc,"//ul[@class = 'square']",function(el) el)
     hrefs <- sapply(nos,extraiHrefs)
-    names(hrefs) <- c("Literatura","Aulas","Exemplos","Apoio","Dados")
+    names(hrefs) <- c("Literatura","Aulas","Exemplos","Apoio","Octave","Dados")
+    print(hrefs)
     
     pastas <- names(hrefs)
     for(p in pastas) {
@@ -102,9 +103,12 @@ baixaArquivos <- function(doc, destino = paste(".",file_sep,sep = "")) {
 
 carregaDependencias()
 ## Get destination folders
-print("Onde estÃ£o as pastas a serem atualizadas?")
-f <- readline(prompt = "Entre com o caminho completo das pastas, separadas por virgula: ")
-script.dir <- strsplit(f,",")[[1]]
+#print(pasta_default)
+if (!exists("pasta_default")) {
+  print("Onde estão as pastas a serem atualizadas?")
+  f <- readline(prompt = "Entre com o caminho completo das pastas, separadas por virgula: ")
+  script.dir <- strsplit(f,",")[[1]]
+} else script.dir <- c(pasta_default)
 
 
 
@@ -117,13 +121,13 @@ atualizacao <- xpathSApply(doc,"//font[@face='Arial, Helvetica, sans-serif']/b",
 for (s in script.dir) {
     f <- paste(s,"ultimaAtualizacao.rds",sep = file_sep)
     
-    ## Comentar se nÃ£o quiser forÃ§ar a atualizaÃ§Ã£o
+    ## Comentar se não quiser forçar a atualização
     forcaAtualizacao(f)
     
     atualizado <- estaAtualizado(atualizacao, destino = f)
     
     if (!atualizado) {
         baixaArquivos(doc, destino = s)
-    }
+    } else print("Já está atualizado")
 }
 #setwd(wd)
